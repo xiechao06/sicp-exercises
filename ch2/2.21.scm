@@ -3,7 +3,7 @@
 
 (define (square-list-2 . w)
         (if (null? w) ()
-          (cons (* (car w) (car w)) (apply square-list-2 (cdr w)))))
+          (cons (square (car w)) (apply square-list-2 (cdr w)))))
 
 
 ;tests
