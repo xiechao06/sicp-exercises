@@ -1,0 +1,16 @@
+(define (same-parity first . args)
+  (define (iter remaining)
+    (if (null? remaining)
+      ()
+      (let ((head (car remaining)))
+        (if (even? (- head first))
+          (cons head (iter (cdr remaining)))
+          (iter (cdr remaining))
+          ))
+      ))
+  (iter args))
+
+;tests
+(same-parity 1)
+(same-parity 1 2 3 4 5)
+(same-parity 2 2 3 4 5)
