@@ -1,11 +1,6 @@
-(define (accumulate op initial s)
-  (if (null? s) initial
-    (op (car s)
-        (accumulate op initial (cdr s)))))
-
 (define (accumulate-n op initial ss)
         (if (null? (car ss)) ()
-          (cons (accumulate op initial (map car ss))
+          (cons (fold-right op initial (map car ss))
                 (accumulate-n op initial (map cdr ss)))))
 
 ; tests
