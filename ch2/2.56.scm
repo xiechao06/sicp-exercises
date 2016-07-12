@@ -23,6 +23,15 @@
 (define (make-product a1 a2)
         (list '* a1 a2))
 
+(define (exponentiation? exp)
+        (eq? (car exp) '**))
+(define (base exp)
+  (cadr exp))
+(define (exponent exp)
+  (caddr exp))
+(define (make-exponentiation a1 a2)
+  (list '** a1 a2))
+
 
 
 (define (deriv exp var)
@@ -35,7 +44,13 @@
                  (make-product (multiplier exp) 
                                (deriv (multiplicand exp) var))
                  (make-product (multiplicand exp)
-                               (deriv (multiplier exp) var))))))
+                               (deriv (multiplier exp) var))))
+              ((exponentiation? exp)
+               (let ((base (base exp))) 
+                 (make-product (exponent exp)
+                               (make-product (make-exponentiation base (- (exponent exp) 1))
+                                             (deriv base var)             
+                                             ))))))
 
 ;tests
 (deriv 3 'x)
@@ -44,6 +59,4 @@
 (deriv '(+ x 3) 'x)
 (deriv '(* x y) 'x)
 (deriv '(* (* x y) (+ x 3)) 'x)
-
-
-
+(deriv '(** (* x 3) 4) 'x)
