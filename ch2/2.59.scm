@@ -9,10 +9,8 @@
     (cons x set)))
 
 (define (union-set s1 s2)
-        (define (iter result rest) 
-          (if (null? rest) result
-            (iter (adjoin-set (car rest) result) (cdr rest))))
-        (iter s2 s1))
+       (if (null? s2) s1
+         (union-set (adjoin-set (car s2) s1) (cdr s2))))
 
 ; tests
 (element-of-set? 1 (list 1 2 3))
